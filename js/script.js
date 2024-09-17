@@ -16,12 +16,22 @@ function insertOptionsInSelect(currencies,selectHTML) {
     }) 
 }
 
+function clearCurrenciesList(currenciesList) {
+    //Removendo alguns dados incorretos vindos da API
+
+    currenciesList.splice(currenciesList.indexOf('VEF_BLKMKT'),3)
+
+    return currenciesList
+}
+
 async function callAPI() {
     const res = await fetch('https://cdn.moeda.info/api/latest.json')
 
     const data = await res.json()
 
-    const currencies = Object.keys(data.rates)
+    const currencies = clearCurrenciesList(Object.keys(data.rates))
+
+    
 
     insertOptionsInSelect(currencies,currency1)
     insertOptionsInSelect(currencies,currency2)
