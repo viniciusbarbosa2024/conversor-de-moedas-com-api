@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded',useApiData)
 
 currency1.addEventListener('change',convertCurrency)
 currency2.addEventListener('change',convertCurrency)
+value1.addEventListener('change',convertCurrency)
+value2.addEventListener('change',convertCurrency)
+
 
 function insertOptionsInSelect(currencies,selectHTML) {
     currencies.forEach((element,index) => {
@@ -33,6 +36,8 @@ async function convertCurrency() {
    const currency1ValueInDollars = data.rates[`${currency1.value}`]
    const currency2ValueInDollars = data.rates[`${currency2.value}`]
 
+   value2.value = value1.value*currency2ValueInDollars/currency1ValueInDollars
+
    
 }
 
@@ -56,8 +61,6 @@ async function useApiData() {
 
     currency1.value = 'USD'
     currency2.value = 'USD'
-
-    console.log(data)
     
 }
 
