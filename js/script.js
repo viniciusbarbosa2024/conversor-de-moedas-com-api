@@ -29,16 +29,22 @@ function clearCurrenciesList(currenciesList) {
   return currenciesList;
 }
 
-async function convertCurrency() {
+async function convertCurrency(e = "none") {
   const data = await getDataFromApi();
 
   const currency1ValueInDollars = data.rates[`${currency1.value}`];
   const currency2ValueInDollars = data.rates[`${currency2.value}`];
 
+  if (e.target === value1) {
+    value2.value =
+      (value1.value * currency2ValueInDollars) / currency1ValueInDollars;
+  } else if (e.target === value2) {
+    value1.value =
+      (value2.value * currency1ValueInDollars) / currency2ValueInDollars;
+  }
+
   // A cotação de uma moeda A numa moeda B é 1 A = currencyAInDollars/currencyBInDollars (Em B)
 
-  value2.value =
-    (value1.value * currency2ValueInDollars) / currency1ValueInDollars;
 }
 
 async function getDataFromApi() {
