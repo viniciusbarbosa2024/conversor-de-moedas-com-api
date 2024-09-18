@@ -1,69 +1,64 @@
-const value1 = document.getElementById('value1')
-const value2 = document.getElementById('value2')
-const currency1 = document.getElementById('currency1')
-const currency2 = document.getElementById('currency2')
+const value1 = document.getElementById("value1");
+const value2 = document.getElementById("value2");
+const currency1 = document.getElementById("currency1");
+const currency2 = document.getElementById("currency2");
 
-document.addEventListener('DOMContentLoaded',useApiData)
+document.addEventListener("DOMContentLoaded", useApiData);
 
-currency1.addEventListener('change',convertCurrency)
-currency2.addEventListener('change',convertCurrency)
-value1.addEventListener('change',convertCurrency)
-value2.addEventListener('change',convertCurrency)
+currency1.addEventListener("change", convertCurrency);
+currency2.addEventListener("change", convertCurrency);
+value1.addEventListener("change", convertCurrency);
+value2.addEventListener("change", convertCurrency);
 
+function insertOptionsInSelect(currencies, selectHTML) {
+  currencies.forEach((element, index) => {
+    const createOption = document.createElement("option");
 
-function insertOptionsInSelect(currencies,selectHTML) {
-    currencies.forEach((element,index) => {
-        const createOption = document.createElement('option')
-        
-        selectHTML.appendChild(createOption)
+    selectHTML.appendChild(createOption);
 
-        selectHTML.children[index].innerHTML = element
-        selectHTML.children[index].value = `${element}`
-    }) 
+    selectHTML.children[index].innerHTML = element;
+    selectHTML.children[index].value = `${element}`;
+  });
 }
 
 function clearCurrenciesList(currenciesList) {
-    //Removendo alguns dados incorretos vindos da API
+  //Removendo alguns dados incorretos vindos da API
 
-    currenciesList.splice(currenciesList.indexOf('VEF_BLKMKT'),3)
+  currenciesList.splice(currenciesList.indexOf("VEF_BLKMKT"), 3);
 
-    return currenciesList
+  return currenciesList;
 }
 
 async function convertCurrency() {
-   const data = await getDataFromApi()
-   
-   const currency1ValueInDollars = data.rates[`${currency1.value}`]
-   const currency2ValueInDollars = data.rates[`${currency2.value}`]
+  const data = await getDataFromApi();
 
-   value2.value = value1.value*currency2ValueInDollars/currency1ValueInDollars
+  const currency1ValueInDollars = data.rates[`${currency1.value}`];
+  const currency2ValueInDollars = data.rates[`${currency2.value}`];
 
-   
+  // A cotação de uma moeda A numa moeda B é 1 A = currencyAInDollars/currencyBInDollars (Em B)
+
+  value2.value =
+    (value1.value * currency2ValueInDollars) / currency1ValueInDollars;
 }
 
 async function getDataFromApi() {
-    const res = await fetch('https://cdn.moeda.info/api/latest.json')
+  const res = await fetch("https://cdn.moeda.info/api/latest.json");
 
-    const data = await res.json()
+  const data = await res.json();
 
-    return data
+  return data;
 }
 
 async function useApiData() {
-    const data = await getDataFromApi()
+  const data = await getDataFromApi();
 
-    const currencies = clearCurrenciesList(Object.keys(data.rates))
+  const currencies = clearCurrenciesList(Object.keys(data.rates));
 
-    
+  insertOptionsInSelect(currencies, currency1);
+  insertOptionsInSelect(currencies, currency2);
 
-    insertOptionsInSelect(currencies,currency1)
-    insertOptionsInSelect(currencies,currency2)
+  currency1.value = "USD";
+  currency2.value = "USD";
 
-    currency1.value = 'USD'
-    currency2.value = 'USD'
-    
+  convertCurrency();
 }
-
-
-
-
