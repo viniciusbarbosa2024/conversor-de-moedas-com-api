@@ -2,6 +2,7 @@ const value1 = document.getElementById("value1");
 const value2 = document.getElementById("value2");
 const currency1 = document.getElementById("currency1");
 const currency2 = document.getElementById("currency2");
+const invertButton = document.getElementById("invertButton");
 
 document.addEventListener("DOMContentLoaded", useApiData);
 
@@ -9,6 +10,7 @@ currency1.addEventListener("change", convertCurrency);
 currency2.addEventListener("change", convertCurrency);
 value1.addEventListener("input", convertCurrency);
 value2.addEventListener("input", convertCurrency);
+invertButton.addEventListener('click',invertCurrencies)
 
 function insertOptionsInSelect(currencies, selectHTML) {
   currencies.forEach((element, index) => {
@@ -19,6 +21,18 @@ function insertOptionsInSelect(currencies, selectHTML) {
     selectHTML.children[index].innerHTML = element;
     selectHTML.children[index].value = `${element}`;
   });
+}
+
+function invertCurrencies() {
+    const valueFromTheFirstInput = value1.value
+    const currencyFromTheFirstSelect = currency1.value
+
+    currency1.value = currency2.value
+    value1.value = value2.value
+
+
+    currency2.value = currencyFromTheFirstSelect
+    value2.value = valueFromTheFirstInput
 }
 
 function clearCurrenciesList(currenciesList) {
