@@ -1,6 +1,7 @@
 * {
     margin: 0px;
     padding: 0px;
+    box-sizing: border-box;
 }
 
 body {
@@ -35,7 +36,7 @@ h1 {
 #inputs {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 10px;
 }
 
 input[type='number'], select {
@@ -60,5 +61,29 @@ input[type='number'] {
 
 select {
     width: 80px;
+}
+
+#invertButtonConteiner {
+    display: flex;
+    justify-content: end;
+}
+
+#invertButtonConteiner button {
+    width: 28px;
+    height: 28px;
+    
+    margin-right: 25px;
+
+    border: 0px;
+
+    background-color: rgb(30, 30, 30);
+}
+
+#invertButtonConteiner button:hover {
+    border:1px solid rgba(255, 255, 255, 0.171)
+}
+
+#invertButtonConteiner button img{
+    width: 25px;
 }
 
