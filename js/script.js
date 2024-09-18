@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", useApiData);
 
 currency1.addEventListener("change", convertCurrency);
 currency2.addEventListener("change", convertCurrency);
-value1.addEventListener("change", convertCurrency);
-value2.addEventListener("change", convertCurrency);
+value1.addEventListener("input", convertCurrency);
+value2.addEventListener("input", convertCurrency);
 
 function insertOptionsInSelect(currencies, selectHTML) {
   currencies.forEach((element, index) => {
@@ -29,21 +29,22 @@ function clearCurrenciesList(currenciesList) {
   return currenciesList;
 }
 
-async function convertCurrency(e = "none") {
+async function convertCurrency(e) {
   const data = await getDataFromApi();
 
   const currency1ValueInDollars = data.rates[`${currency1.value}`];
   const currency2ValueInDollars = data.rates[`${currency2.value}`];
 
+  // A cotação de uma moeda A numa moeda B é 1 A = currencyAInDollars/currencyBInDollars (Em B)
+
   if (e.target === value1) {
     value2.value =
-      (value1.value * currency2ValueInDollars) / currency1ValueInDollars;
+      (value1.value * currency2ValueInDollars) / currency1ValueInDollars
   } else if (e.target === value2) {
     value1.value =
-      (value2.value * currency1ValueInDollars) / currency2ValueInDollars;
+      (value2.value * currency1ValueInDollars) / currency2ValueInDollars
   }
 
-  // A cotação de uma moeda A numa moeda B é 1 A = currencyAInDollars/currencyBInDollars (Em B)
 
 }
 
@@ -63,8 +64,6 @@ async function useApiData() {
   insertOptionsInSelect(currencies, currency1);
   insertOptionsInSelect(currencies, currency2);
 
-  currency1.value = "USD";
+  currency1.value = "BRL";
   currency2.value = "USD";
-
-  convertCurrency();
 }
