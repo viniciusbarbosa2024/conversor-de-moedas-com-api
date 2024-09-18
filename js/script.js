@@ -51,10 +51,10 @@ async function convertCurrency(e) {
 
   // A cotação de uma moeda A numa moeda B é 1 A = currencyAInDollars/currencyBInDollars (Em B)
 
-  if (e.target === value1) {
+  if (e.target === value1 || e.target === currency2) {
     value2.value =
       (value1.value * currency2ValueInDollars) / currency1ValueInDollars
-  } else if (e.target === value2) {
+  } else if (e.target === value2 || e.target === currency1) {
     value1.value =
       (value2.value * currency1ValueInDollars) / currency2ValueInDollars
   }
