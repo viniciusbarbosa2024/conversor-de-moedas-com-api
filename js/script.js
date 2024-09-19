@@ -72,14 +72,15 @@ async function getDataFromApi() {
   return data;
 }
 
+//Usar dados da API na exibição da página
 async function useApiData() {
   const currencies = clearCurrenciesList(Object.keys(data.rates));
 
   insertOptionsInSelect(currencies, currency1);
   insertOptionsInSelect(currencies, currency2);
 
-  currency1.value = "BRL";
-  currency2.value = "USD";
+  currency1.value = "USD";
+  currency2.value = "BRL";
 }
 
 }
