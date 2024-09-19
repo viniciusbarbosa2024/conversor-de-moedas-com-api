@@ -1,10 +1,14 @@
+async function generalFunction() {
+
 const value1 = document.getElementById("value1");
 const value2 = document.getElementById("value2");
 const currency1 = document.getElementById("currency1");
 const currency2 = document.getElementById("currency2");
 const invertButton = document.getElementById("invertButton");
 
-document.addEventListener("DOMContentLoaded", useApiData);
+const data = await getDataFromApi()
+
+useApiData()
 
 currency1.addEventListener("change", convertCurrency);
 currency2.addEventListener("change", convertCurrency);
@@ -44,8 +48,6 @@ function clearCurrenciesList(currenciesList) {
 }
 
 async function convertCurrency(e) {
-  const data = await getDataFromApi();
-
   const currency1ValueInDollars = data.rates[`${currency1.value}`];
   const currency2ValueInDollars = data.rates[`${currency2.value}`];
 
@@ -71,8 +73,6 @@ async function getDataFromApi() {
 }
 
 async function useApiData() {
-  const data = await getDataFromApi();
-
   const currencies = clearCurrenciesList(Object.keys(data.rates));
 
   insertOptionsInSelect(currencies, currency1);
@@ -81,3 +81,7 @@ async function useApiData() {
   currency1.value = "BRL";
   currency2.value = "USD";
 }
+
+}
+
+generalFunction()
